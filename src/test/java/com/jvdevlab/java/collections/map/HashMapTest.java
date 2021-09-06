@@ -98,4 +98,12 @@ public class HashMapTest {
 
         assertEquals(1, map.size());
     }
+
+    @Test
+    public void allowsNullKeyAndValue() {
+        Map<String, String> map = new HashMap<>();
+        map.put(null, null);
+
+        assertEquals(null, map.get(null));
+    }
 }
