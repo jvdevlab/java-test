@@ -2,9 +2,11 @@ package com.jvdevlab.java.jvm.classloading;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+
 import java.util.Arrays;
-import javax.script.AbstractScriptEngine;
+
 import org.junit.jupiter.api.Test;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -12,21 +14,19 @@ public class ClassLoaders {
 
     @Test
     public void builtInClassLoaders() {
-        ClassLoader applicationClassLoader = this.getClass().getClassLoader();
-        log.debug(applicationClassLoader.toString());
-        assertEquals("app", applicationClassLoader.getName());
-        assertEquals("platform", applicationClassLoader.getParent().getName());
+        ClassLoader application = this.getClass().getClassLoader();
+        log.debug(application.toString());
+        assertEquals("app", application.getName());
 
-        // To figure out what packages/classes we have in Platform Class loader
-        Arrays.stream(ClassLoader.getPlatformClassLoader().getDefinedPackages()).forEach(p -> log.debug(p.getName()));
-        ClassLoader platformClassLoader = AbstractScriptEngine.class.getClassLoader();
-        log.debug(platformClassLoader.toString());
-        assertEquals("platform", platformClassLoader.getName());
+        ClassLoader platform = application.getParent();
+        log.debug(platform.toString());
+        assertEquals("platform", platform.getName());
+        // Print packages loaded using Platform Class loader
+        Arrays.stream(platform.getDefinedPackages()).forEach(p -> log.debug(p.getName()));
+
         // Bootstrap Class Loaded is native so result is null.
-        assertNull(platformClassLoader.getParent());
-
-        // Same
-        assertNull(Object.class.getClassLoader());
+        ClassLoader bootstrap = platform.getParent();
+        assertNull(bootstrap);
     }
 
     @Test
@@ -49,7 +49,8 @@ public class ClassLoaders {
      * Note, in delegation algorithm the visibility works the other way around).
      * Normal J2SE delegation does not work, and the workaround is to make the core
      * JNDI classes use thread context loaders, thus effectively "tunneling" through
-     * the class loader hierarchy in the direction opposite to the proper delegation.
+     * the class loader hierarchy in the direction opposite to the proper
+     * delegation.
      */
     @Test
     public void doNotUseContextClassLoader() {

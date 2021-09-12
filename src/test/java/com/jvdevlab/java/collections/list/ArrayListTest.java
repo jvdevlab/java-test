@@ -8,9 +8,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -24,6 +26,8 @@ public class ArrayListTest {
         list.add("a");
         list.add("b");
         list.add("c");
+
+        new CopyOnWriteArrayList<>(list);
 
         // size
         assertEquals(3, list.size());

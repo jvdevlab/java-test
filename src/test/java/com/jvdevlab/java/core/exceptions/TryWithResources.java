@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.junit.jupiter.api.Test;
-import org.junit.platform.commons.util.ExceptionUtils;
 
 public class TryWithResources {
 
@@ -36,6 +35,15 @@ public class TryWithResources {
             }
         }
         assertNull(reader);
+    }
+
+    @Test
+    public void newWayOfClosingAResource() {
+        try (FileReader reader = new FileReader("@")) {
+            reader.read();
+        } catch (Exception e) {
+            // do nothing
+        }
     }
 
     @Test
@@ -132,30 +140,6 @@ public class TryWithResources {
     }
 
     @Test
-    public void suppressedExceptions() {
-        String stackTrace = "";
-
-        try (AutoCloseable r = () -> {
-            throw new Exception("Close Exception");
-        }) {
-            throw new Exception("Resource Exception");
-        } catch (Exception e) {
-            // The first exception "wins"
-            // Resource Exception was first so it wins. As "Java only allows for one
-            // exception to propagate, the other exceptions are suppressed."
-            assertEquals("Resource Exception", e.getMessage());
-            // Close Exception was suppressed.
-            assertEquals("Close Exception", e.getSuppressed()[0].getMessage());
-
-            stackTrace = ExceptionUtils.readStackTrace(e);
-        }
-
-        // Suppressed exception is added to the stack trace.
-        assertTrue(stackTrace.contains("java.lang.Exception: Resource Exception"));
-        assertTrue(stackTrace.contains("Suppressed: java.lang.Exception: Close Exception"));
-    }
-
-    @Test
     public void java9Enhancements() {
         // "Before Java 9 a resource that is to be automatically closed must be created
         // inside the parentheses of the try block of a try-with-resources construct.
@@ -163,18 +147,20 @@ public class TryWithResources {
         // resource is final or effectively final, you can simply enter a reference to
         // the variable inside the try block parentheses."
 
+        // this is "final" for another reason (closure requirements)
         AtomicBoolean isClosed = new AtomicBoolean(false);
 
-        class ResourceA implements Closeable {
-            @Override
-            public void close() {
-                isClosed.set(true);
-            }
-        }
+        // Didn't explicitly marked as final.
+        Closeable resource = () -> isClosed.set(true);
 
-        ResourceA resource = new ResourceA();
+        // This will give compiler error as the resource var will stop
+        // being effectively-final after re-assignment.
+        // resource = null;
+
         try (resource) {
-            // do nothing;
+            // do nothing.
+        } catch (Exception e) {
+            // do nothing.
         }
 
         // resource available outside of the scope of the Try block

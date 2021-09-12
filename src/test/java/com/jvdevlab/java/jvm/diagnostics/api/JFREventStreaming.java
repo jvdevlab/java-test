@@ -20,7 +20,7 @@ public class JFREventStreaming {
     // https://mbien.dev/blog/entry/jfr-event-streaming-with-java
     @Test
     public void streamCPULoadEvents() throws Exception {
-        final String expected = "Test JFR monitoring excpetions";
+        final String expected = "Test JFR monitoring exceptions";
 
         try (var rs = new RecordingStream()) {
             int secondsToRun = 2;

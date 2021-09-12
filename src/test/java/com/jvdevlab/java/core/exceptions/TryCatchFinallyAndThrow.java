@@ -53,7 +53,6 @@ public class TryCatchFinallyAndThrow {
     @Test
     public void multipleCatchesInheretenceVsUnrelatedExceptionHandling() {
         // For demo purposes only. We shouldn't catch runtime exceptions.
-
         boolean mostNarrowExceptionWins = false;
 
         try {

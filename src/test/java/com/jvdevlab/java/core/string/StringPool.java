@@ -13,20 +13,13 @@ public class StringPool {
      */
     @Test
     public void stringPool() {
-        // "a" is added to SCP and refA1 is returned
         String a1 = "a";
-        // "a" is already in SCP so refA1 is returned.
         String a2 = "a";
         assertTrue(a1 == a2);
-        // "a" is already in SCP
-        // but a new refA2 is created on the heap and returned.
         String a3 = new String("a");
         assertTrue(a3 != a1);
 
-        // "b" is added to SCP with refB1
-        // but a new refB2 is created on the heap and returned.
         String b1 = new String("b");
-        // "b" is already in SCP and we get refB1.
         String b2 = "b";
         assertTrue(b1 != b2);
     }

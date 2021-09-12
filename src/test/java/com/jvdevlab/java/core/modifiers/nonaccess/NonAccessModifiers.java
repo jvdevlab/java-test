@@ -9,8 +9,7 @@ public class NonAccessModifiers {
         static transient volatile float property = 0f;
 
         // abstract doesn't go together with static or synchronized
-        final static synchronized void method() {
-        };
+        final static synchronized native void method();
     }
 
 }

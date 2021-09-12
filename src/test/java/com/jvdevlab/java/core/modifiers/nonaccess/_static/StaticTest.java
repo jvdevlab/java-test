@@ -1,4 +1,4 @@
-package com.jvdevlab.java.core.keywords;
+package com.jvdevlab.java.core.modifiers.nonaccess._static;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;

@@ -13,14 +13,15 @@ public class Arrays {
     @Test
     public void differentWaysToInitAnArray() {
         int[] array = { 1, 2, 3 };
+        int[] array2 = new int[] { 1, 2, 3 };
+        int[] array3 = new int[3];
+
         // This will give compilation error:
         // array = {1, 2, 3}
         // "Array constants can only be used in initializers"
 
-        int[] array2 = new int[] { 1, 2, 3 };
         assertEquals(array.length, array2.length);
 
-        int[] array3 = new int[3];
         assertEquals(3, array3.length);
         // All values are set to 0.
         assertEquals(0, array3[0]);

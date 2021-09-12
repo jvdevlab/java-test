@@ -2,33 +2,37 @@ package com.jvdevlab.java.core.exceptions;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import java.sql.SQLException;
+
 import org.junit.jupiter.api.Test;
 import org.junit.platform.commons.util.ExceptionUtils;
 
-public class ChainedExceptionsVsSuppressedExceptions {
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+public class SuppressedExceptions {
 
     @Test
-    public void chainedExceptions() {
+    public void suppressedExceptions() {
         String stackTrace = "";
 
-        try {
-            try {
-                throw new SQLException("Level 1");
-            } catch (SQLException e) {
-                throw new Exception("Level 2", e); // chained
-            }
+        try (AutoCloseable r = () -> {
+            throw new Exception("Close Exception");
+        }) {
+            throw new Exception("Resource Exception");
         } catch (Exception e) {
+            // The first exception "wins"
+            // Resource Exception was first so it wins. As "Java only allows for one
+            // exception to propagate, the other exceptions are suppressed."
+            assertEquals("Resource Exception", e.getMessage());
+            // Close Exception was suppressed.
+            assertEquals("Close Exception", e.getSuppressed()[0].getMessage());
+
             stackTrace = ExceptionUtils.readStackTrace(e);
         }
 
-        assertTrue(stackTrace.contains("java.lang.Exception: Level 2"));
-        assertTrue(stackTrace.contains("Caused by: java.sql.SQLException: Level 1"));
-    }
-
-    @Test
-    public void suppressedExceptionsGeneratedByTryWithResources() {
-        new TryWithResources().suppressedExceptions();
+        // Suppressed exception is added to the stack trace.
+        assertTrue(stackTrace.contains("java.lang.Exception: Resource Exception"));
+        assertTrue(stackTrace.contains("Suppressed: java.lang.Exception: Close Exception"));
     }
 
     @Test
@@ -40,6 +44,7 @@ public class ChainedExceptionsVsSuppressedExceptions {
         assertEquals(2, e.getSuppressed().length);
 
         String stackTrace = ExceptionUtils.readStackTrace(e);
+        log.debug(stackTrace);
 
         assertTrue(stackTrace.contains("java.lang.Exception: Main Exception"));
         assertTrue(stackTrace.contains("Suppressed: java.lang.Exception: Suppressed 1"));
