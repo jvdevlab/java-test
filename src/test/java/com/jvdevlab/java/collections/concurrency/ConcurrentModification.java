@@ -1,4 +1,4 @@
-package com.jvdevlab.java.collections;
+package com.jvdevlab.java.collections.concurrency;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -13,7 +13,7 @@ import java.util.ListIterator;
 
 import org.junit.jupiter.api.Test;
 
-public class ConcurrentModificationTest {
+public class ConcurrentModification {
 
     /**
      * From JavaDoc:
@@ -81,7 +81,7 @@ public class ConcurrentModificationTest {
     }
 
     @Test
-    public void concurrentChangeUsingIteratorMethodsIsOK() {
+    public void changeUsingIteratorMethodsIsOK() {
         List<String> list = new ArrayList<>();
         list.add("a");
         list.add("b");
