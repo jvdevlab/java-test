@@ -19,7 +19,8 @@ public class PeekFunction {
 
     @Test
     public void parallelPeek() {
-        Integer sum = IntStream.range(1, 10).parallel().peek(x -> System.out.println(Thread.currentThread().getName()))
+        Integer sum = IntStream.range(1, 10).parallel()
+                .peek(x -> System.out.println(Thread.currentThread().getName()))
                 .sum();
         assertEquals(45, sum);
     }

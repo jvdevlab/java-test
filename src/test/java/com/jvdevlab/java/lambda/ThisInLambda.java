@@ -16,6 +16,7 @@ public class ThisInLambda {
         class A {
             int i = 1;
 
+            @SuppressWarnings("unused")
             int getI() {
                 return ((Supplier<Integer>) (() -> {
                     int i = 2;

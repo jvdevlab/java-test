@@ -16,7 +16,7 @@ public class StringPool {
         String a1 = "a";
         String a2 = "a";
         assertTrue(a1 == a2);
-        
+
         // a3 is not compile time constant
         // so it's not interned automatically
         String a3 = new String("a");
@@ -29,7 +29,8 @@ public class StringPool {
         String a2 = new String("a");
         assertTrue(a1 != a2);
 
-        // Can't just call this, as strings are immutable!
+        // This alone will not be enough to make a1==a2, as strings are
+        // immutable!
         // a2.intern();
 
         // After interning the object that was created with 'new'

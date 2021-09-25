@@ -37,7 +37,7 @@ public class StaticKeywordUsage {
             log.debug("1st static block: classVariable = " + classVariable);
         }
 
-        // Cannot make a static reference to the non-static field instanceVariable
+        // Cannot make a static reference to the non-static field
         // instanceVariable = 2;
     }
 
@@ -53,7 +53,8 @@ public class StaticKeywordUsage {
     static void classMethod() {
         classVariable = 4;
 
-        // Cannot make a static reference to the non-static field instanceVariable
+        // Cannot make a static reference to the non-static field
+        // instanceVariable
         // instanceVariable = 4;
 
         // Cannot use this in a static context
@@ -84,7 +85,8 @@ public class StaticKeywordUsage {
         // Illegal modifier for parameter localVariable; only final is permitted
         // static int localVariable;
 
-        // Illegal modifier for the local class MethodLocalInnerClass; only abstract or
+        // Illegal modifier for the local class MethodLocalInnerClass; only
+        // abstract or
         // final is permitted.
         // static class MethodLocalInnerClass {}
 

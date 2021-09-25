@@ -12,25 +12,21 @@ public class Arrays {
 
     @Test
     public void differentWaysToInitAnArray() {
-        int[] array = { 1, 2, 3 };
+        // specify capacity
+        int[] array = new int[3];
+        // inline initialization
         int[] array2 = new int[] { 1, 2, 3 };
-        int[] array3 = new int[3];
-
-        // This will give compilation error:
-        // array = {1, 2, 3}
+        // short syntax, w/o new keyword
+        int[] array3 = { 1, 2, 3 };
         // "Array constants can only be used in initializers"
+        // array = {1, 2, 3}
+        // this syntax is rarely used.
+        int array4[] = { 1, 2, 3 };
 
-        assertEquals(array.length, array2.length);
-
+        assertEquals(3, array.length);
+        assertEquals(3, array2.length);
         assertEquals(3, array3.length);
-        // All values are set to 0.
-        assertEquals(0, array3[0]);
-        assertEquals(0, array3[1]);
-        assertEquals(0, array3[2]);
-
-        // Can put [] after the variable name; though, this syntax is rarely used.
-        int array4[] = {};
-        assertEquals(0, array4.length);
+        assertEquals(3, array4.length);
     }
 
     @Test
@@ -50,12 +46,16 @@ public class Arrays {
         // Max Array size is Integer.MAX_VALUE.
         assertThrows(OutOfMemoryError.class, () -> {
             // But most likely you will get:
-            // "java.lang.OutOfMemoryError: Requested array size exceeds VM limit"
+            // "java.lang.OutOfMemoryError: Requested array size exceeds VM
+            // limit"
             int[] largestArray = new int[Integer.MAX_VALUE];
             largestArray[0] = 1;
-            // This is platform specific and you might be able to create an array
-            // with Integer.MAX_VALUE-1 or Integer.MAX_VALUE-2 or other smaller number.
-            // Practically speaking, you'd be better of with using smaller arrays.
+            // This is platform specific and you might be able to create an
+            // array
+            // with Integer.MAX_VALUE-1 or Integer.MAX_VALUE-2 or other smaller
+            // number.
+            // Practically speaking, you'd be better of with using smaller
+            // arrays.
         });
     }
 

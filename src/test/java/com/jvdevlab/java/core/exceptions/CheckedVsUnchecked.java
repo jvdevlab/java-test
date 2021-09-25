@@ -84,11 +84,9 @@ public class CheckedVsUnchecked {
 
     @Test
     @SuppressWarnings("null")
-    public void doNotHandleUnrecoverableException() {
-        // For the most part you shouldn't try to catch Unchecked Exceptions
-        // (RuntimeExceptions)
-
-        // Missuses of the API / Programmer Errors that need to be fixed
+    public void doNotHandleRuntimeExceptions() {
+        // they are most likely bugs
+       
         assertThrows(ArithmeticException.class, () -> {
             @SuppressWarnings("unused")
             int i = 1 / 0;
@@ -107,7 +105,7 @@ public class CheckedVsUnchecked {
 
     @Test
     public void doNotHandleErrors() {
-        // Usually you can't do shit about this.
+        // You can't recover from them.
 
         assertThrows(OutOfMemoryError.class, () -> {
             throw new OutOfMemoryError();
@@ -168,14 +166,17 @@ public class CheckedVsUnchecked {
 
     // "So, checked exceptions are hard get right, and misuse has problematic
     // consequences. It should be noted however, that this is the case with all
-    // non-trivial language features. There are many examples of abstract classes
-    // that should have been interfaces, and many designs based on inheritance where
+    // non-trivial language features. There are many examples of abstract
+    // classes
+    // that should have been interfaces, and many designs based on inheritance
+    // where
     // aggregation would have been better."
 
     @Test
     @SuppressWarnings("unused")
     public void checkedExceptionProsFailFastDevelopment() {
-        // "Exceptional situations, such as possible IO errors, surface at compile
+        // "Exceptional situations, such as possible IO errors, surface at
+        // compile
         // time."
         class A {
             public void method() throws IOException {
@@ -189,30 +190,38 @@ public class CheckedVsUnchecked {
 
     @Test
     public void checkedExceptionProsContract() {
-        // "The fact that a method throws a certain exception can be an essential part
-        // of the contract. The throws declaration is therefore as important as the
-        // types of the return value and parameters. Apart from the static analysis it
+        // "The fact that a method throws a certain exception can be an
+        // essential part
+        // of the contract. The throws declaration is therefore as important as
+        // the
+        // types of the return value and parameters. Apart from the static
+        // analysis it
         // enables, it also serves a documentation purpose for the programmer."
     }
 
     @Test
     public void checkedExceptionConsExtensibility() {
-        // "You can't add throws SomeCheckedException to a method signature without
+        // "You can't add throws SomeCheckedException to a method signature
+        // without
         // breaking client code, which restricts the evolution of APIs."
     }
 
     @Test
     public void checkedExceptionConsMisuse() {
-        // "Many checked exceptions, including some in the the Java API, should have
-        // been implemented as unchecked exceptions. Such misuse leads to frustration
-        // and in the end catch blocks that either ignores them or rethrows them as
+        // "Many checked exceptions, including some in the the Java API, should
+        // have
+        // been implemented as unchecked exceptions. Such misuse leads to
+        // frustration
+        // and in the end catch blocks that either ignores them or rethrows them
+        // as
         // RuntimeExceptions which in turn are never caught."
 
         // Compiler error: Unhandled exception type MalformedURLException
         // Even though the error will never be thrown in the below case.
         // URL url = new URL("https://google.com");
 
-        // Many developers will rethrow this as RuntimeException to simplify things.
+        // Many developers will rethrow this as RuntimeException to simplify
+        // things.
         class URLUtils {
             public URL createUrl(String url) {
                 URL result = null;
@@ -235,6 +244,7 @@ public class CheckedVsUnchecked {
 
     @Test
     public void checkedExceptionConsPropagation() {
-        new ExceptionDonNotPropagateInStreams().exceptionDonNotPropagateInStreams();
+        new ExceptionDonNotPropagateInStreams()
+                .exceptionDonNotPropagateInStreams();
     }
 }

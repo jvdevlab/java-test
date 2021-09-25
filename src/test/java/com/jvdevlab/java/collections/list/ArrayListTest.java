@@ -8,7 +8,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
@@ -77,9 +76,11 @@ public class ArrayListTest {
         List<Integer> list = new ArrayList<>();
         list.add(1);
         List<Integer> unmodifiableList = Collections.unmodifiableList(list);
-        assertThrows(UnsupportedOperationException.class, () -> unmodifiableList.add(2));
+        assertThrows(UnsupportedOperationException.class,
+                () -> unmodifiableList.add(2));
 
-        List<Integer> list2 = IntStream.range(0, 5).mapToObj(Integer::valueOf).collect(Collectors.toUnmodifiableList());
+        List<Integer> list2 = IntStream.range(0, 5).mapToObj(Integer::valueOf)
+                .collect(Collectors.toUnmodifiableList());
         assertThrows(UnsupportedOperationException.class, () -> list2.add(2));
     }
 }

@@ -20,9 +20,9 @@ public class SuppressedExceptions {
         }) {
             throw new Exception("Resource Exception");
         } catch (Exception e) {
-            // The first exception "wins"
-            // Resource Exception was first so it wins. As "Java only allows for one
-            // exception to propagate, the other exceptions are suppressed."
+            // The first exception "wins" Resource Exception was first so it
+            // wins. As "Java only allows for one exception to propagate, the
+            // other exceptions are suppressed."
             assertEquals("Resource Exception", e.getMessage());
             // Close Exception was suppressed.
             assertEquals("Close Exception", e.getSuppressed()[0].getMessage());
@@ -31,8 +31,10 @@ public class SuppressedExceptions {
         }
 
         // Suppressed exception is added to the stack trace.
-        assertTrue(stackTrace.contains("java.lang.Exception: Resource Exception"));
-        assertTrue(stackTrace.contains("Suppressed: java.lang.Exception: Close Exception"));
+        assertTrue(
+                stackTrace.contains("java.lang.Exception: Resource Exception"));
+        assertTrue(stackTrace
+                .contains("Suppressed: java.lang.Exception: Close Exception"));
     }
 
     @Test
@@ -47,7 +49,9 @@ public class SuppressedExceptions {
         log.debug(stackTrace);
 
         assertTrue(stackTrace.contains("java.lang.Exception: Main Exception"));
-        assertTrue(stackTrace.contains("Suppressed: java.lang.Exception: Suppressed 1"));
-        assertTrue(stackTrace.contains("Suppressed: java.lang.Exception: Suppressed 2"));
+        assertTrue(stackTrace
+                .contains("Suppressed: java.lang.Exception: Suppressed 1"));
+        assertTrue(stackTrace
+                .contains("Suppressed: java.lang.Exception: Suppressed 2"));
     }
 }
