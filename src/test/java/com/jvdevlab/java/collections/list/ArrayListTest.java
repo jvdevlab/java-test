@@ -71,16 +71,5 @@ public class ArrayListTest {
         });
     }
 
-    @Test
-    public void unmodifiableList() {
-        List<Integer> list = new ArrayList<>();
-        list.add(1);
-        List<Integer> unmodifiableList = Collections.unmodifiableList(list);
-        assertThrows(UnsupportedOperationException.class,
-                () -> unmodifiableList.add(2));
 
-        List<Integer> list2 = IntStream.range(0, 5).mapToObj(Integer::valueOf)
-                .collect(Collectors.toUnmodifiableList());
-        assertThrows(UnsupportedOperationException.class, () -> list2.add(2));
-    }
 }

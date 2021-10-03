@@ -15,12 +15,10 @@ public class MapFunction {
         List<String> strings = List.of("1", "2", "3");
         List<Integer> integers = strings.stream().map(s -> Integer.parseInt(s))
                 .collect(Collectors.toList());
-        assertEquals(3, integers.size());
-        assertEquals(3, integers.get(2));
+        assertEquals(1, integers.get(0));
 
-        // Same with method reference
-        integers = strings.stream().map(Integer::parseInt)
-                .collect(Collectors.toList());
+        // Same with method reference and new toList method
+        integers = strings.stream().map(Integer::parseInt).toList();
         assertEquals(1, integers.get(0));
     }
 
