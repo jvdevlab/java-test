@@ -16,6 +16,7 @@ public class Diamond {
         }
 
         interface B {
+            @SuppressWarnings("unused")
             default String say() {
                 return "Hey!";
             }

@@ -1,9 +1,6 @@
 package com.jvdevlab.java.oop;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.sql.Driver;
 
 import org.junit.jupiter.api.Test;
 

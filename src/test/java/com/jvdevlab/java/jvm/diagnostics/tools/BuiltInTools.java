@@ -5,9 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 import org.junit.jupiter.api.Test;
-import static com.jvdevlab.java.utils.MyStringUtils.inputStreamToString;
 
 public class BuiltInTools {
 
@@ -20,7 +20,8 @@ public class BuiltInTools {
         Process process = builder.start();
 
         StringBuilder result = new StringBuilder();
-        result.append(inputStreamToString(process.getInputStream()));
+        result.append(new String(process.getInputStream().readAllBytes(),
+                StandardCharsets.UTF_8));
 
         String pids[] = result.toString().split("\n");
         assertNotNull(pids);
@@ -28,12 +29,14 @@ public class BuiltInTools {
         int exitCode = process.waitFor();
         assertEquals(0, exitCode);
 
-        // have to loop over all pids as some of them might could exit by this time
+        // have to loop over all pids as some of them might could exit by this
+        // time
         for (String pid : pids) {
             pid = pid.split(" ")[0];
             builder.command("jinfo", pid);
             process = builder.start();
-            result.append(inputStreamToString(process.getInputStream()));
+            result.append(new String(process.getInputStream().readAllBytes(),
+                    StandardCharsets.UTF_8));
             process.waitFor(); // some might return 1
         }
         assertTrue(result.toString().contains("Java System Properties"));

@@ -1,9 +1,9 @@
 package com.jvdevlab.java.jvm;
 
-import static com.jvdevlab.java.utils.MyStringUtils.inputStreamToString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 import org.junit.jupiter.api.Test;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +17,8 @@ public class Bytecode {
         builder.command("javap", "-c", "java.lang.Object");
         Process process = builder.start();
 
-        String result = inputStreamToString(process.getInputStream());
+        String result = new String(process.getInputStream().readAllBytes(),
+                StandardCharsets.UTF_8);
         log.debug(result);
         assertTrue(result.contains("invokevirtual"));
 
