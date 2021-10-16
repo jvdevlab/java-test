@@ -9,28 +9,31 @@ public class Diamond {
     @Test
     public void diamond() {
 
-        interface A {
+        interface B {
             default String say() {
                 return "Hi!";
             }
         }
 
-        interface B {
+        interface C {
             @SuppressWarnings("unused")
             default String say() {
                 return "Hey!";
             }
         }
 
-        // Duplicate default methods named say with the parameters () and () are
-        // inherited from the types B and A
-        class C implements A, B {
+        // Which say() method is inherited? From B or C?
+        // Compiler will make you provide an implementation of
+        // this method inside D to resolve the conflict.
+        class D implements B, C {
             public String say() {
-                return A.super.say(); // See this fancy stuff
+                // Whit this syntax you can redirect implementation
+                // to a specific interface
+                return B.super.say();
             }
         }
 
-        assertEquals("Hi!", new C().say());
+        assertEquals("Hi!", new D().say());
     }
 
 }
