@@ -6,6 +6,7 @@ public class Shadowing {
 
     int i;
 
+    @SuppressWarnings("unused")
     @Test
     public void shadowing() {
         int i;
