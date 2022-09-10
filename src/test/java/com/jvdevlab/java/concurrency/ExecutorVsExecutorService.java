@@ -56,6 +56,8 @@ public class ExecutorVsExecutorService {
         // blocking call.
         String name = result.get();
 
-        assertEquals(name, "pool-1-thread-1");
+        // name = pool-X-thread-Y
+        assertTrue(name.contains("pool-"));
+        assertTrue(name.contains("-thread-"));
     }
 }
