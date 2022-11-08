@@ -3,7 +3,6 @@ package com.jvdevlab.java.functional.general;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.function.Function;
-import java.util.function.UnaryOperator;
 
 import org.junit.jupiter.api.Test;
 
